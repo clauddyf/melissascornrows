@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melissa's Game</title>
+    <title>Eggwhite</title>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:900|Monda:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
             <div class='instructions'>
                 <h1>Eradicate The 'Rona'</h1>
                 <div>Instructions</div>
-                    <p>The world is under attack by COVID-19. Destroy the contagious virus using Melissa's beautiful face, before it destroys the planet. The fate of the world is in your hands</p>
+                    <p>The world is under attack by COVID-19. Destroy the contagious virus using Melissa's face, before it destroys the planet. The fate of the world is in your hands</p>
                     <div class='controls'>
                         <div class='directions'>
                             <h2>Controls:</h2>
@@ -36,11 +36,38 @@
                                 Down:<img class='dirphoto' src="down.png" alt="">
                             </span>
                         </div>
+                        <!-- <div class="scores">
+                            <span id='displayspan' onclick="DisplayScores()">High Scores</span>
+                        </div> -->
                     </div>
             </div>
         </div>
         <button id='startit' onclick="ShooterGame(true)">Press to start</button>
         <div>
+    <script type="text/javascript" src="high_scores.js"></script>        
     <script type="text/javascript" src="shooter.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+    
+    <!-- <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDj4xslcYXqqDpUtCbz2ULkZN_OgPNxlBs",
+            authDomain: "ronaproject-a4a89.firebaseapp.com",
+            databaseURL: "https://ronaproject-a4a89.firebaseio.com",
+            projectId: "ronaproject-a4a89",
+            storageBucket: "ronaproject-a4a89.appspot.com",
+            messagingSenderId: "628291255327",
+            appId: "1:628291255327:web:077f6871912c9d2794692a",
+            measurementId: "G-M379LDKFCQ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script> -->
 </body>
 </html>

@@ -1,9 +1,60 @@
 var ShooterGame = function(bool){
+    var firebaseConfig = {
+        apiKey: "AIzaSyDj4xslcYXqqDpUtCbz2ULkZN_OgPNxlBs",
+        authDomain: "ronaproject-a4a89.firebaseapp.com",
+        databaseURL: "https://ronaproject-a4a89.firebaseio.com",
+        projectId: "ronaproject-a4a89",
+        storageBucket: "ronaproject-a4a89.appspot.com",
+        messagingSenderId: "628291255327",
+        appId: "1:628291255327:web:077f6871912c9d2794692a",
+        measurementId: "G-M379LDKFCQ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var db = firebase.database()
+    var dbRef = db.ref()
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    
+
+    this.displayScores = () => {
+        debugger
+        const daddy = document.createElement('section')
+
+        const scoresContainer = document.createElement('div')
+        scoresContainer.className = 'highscores-module'
+
+        let currentScores = []
+
+        getHighScores().map(players => {
+            return players.map(player => {
+                const playaDetails = `<li>${player.name} - ${player.score} Eradications </li>`
+                currentScores.push(playaDetails)
+            })
+        })
+
+        scoresContainer.innerHTML = 
+        `<span onclick="closeModal()">x</span>
+         <h2>High Scores</h2>
+         <div class="leader-boards">
+            <ol>` + currentScores.join(" ") + `</ol>
+         </div>
+        `
+        // document.
+        daddy.appendChild(scoresContainer)
+
+    }
+
+    var closeModal = () => {
+        const daddy = document.createElement('section')
+        const modal = document.querySelector('.highscores-module')
+        daddy.removeChild(modal)
+    }
 
     var getRandom = function(min,max) {
         return Math.floor(Math.random() * (max-min + 1)) + min;
@@ -215,20 +266,13 @@ var ShooterGame = function(bool){
 
     var gameDone = new GameOver(new GameObject(canvas.width / 2, 25, 0, 0))
 
-
-    var getCanvasMouse = function(e){
-            var rect = canvas.getBoundingClientRect();
-            var x = (e.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
-            var y = (e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
-            return new Vector(x,y)
-    };
-
     var World = function(){
             var player = new Player();
             var enemies = [];
             var bullets = [];
             var lastEnemy = 0;
-            var enemyTimeThreshold = 960;
+            var enemyTimeThreshold = 490;
+            // const dbRef = firebase.database().ref()
             var update = function(){
                 if(lastEnemy + enemyTimeThreshold < Date.now()){
                     enemies.push(new Enemy(new GameObject(0,5,0,0)));
@@ -290,6 +334,71 @@ var ShooterGame = function(bool){
             }
 
 
+            var resultsFunction = (array) => {
+                // let highScores = getHighScores()
+                getHighScores()
+                const daddy = document.createElement('section')
+                const module  = document.createElement('div')
+                module.className = 'module'
+                const scoresContainer = document.createElement('div')
+                scoresContainer.className = 'highscores'
+
+                const resultsContainer = document.createElement('div')
+                resultsContainer.className = 'results'
+                
+
+                resultsContainer.innerHTML = `
+                    <h2>Game Over: You have done this planet a great service</h2>
+                    <p>You eradicated ${(scoreManager.score) / 2} cases of CoronaVirus.
+                        Your score is ${scoreManager.score}
+                    </p>
+                    <form action="" class="form">
+                        <legend>Submit your score!</legend>
+                        <label for="userName" class="visuallyHidden">Name</label>
+                        <input type="text" name="userName" placeholder="Name" id ="userName" maxlength=10 required>
+                        <input type="submit" id="restart-button" value="Submit">
+                        </form>
+                        `;
+                        // <button id="restart-button" onclick="(  )">Play Again?</button>
+                document.body.removeChild(canvas)
+                module.appendChild(scoresContainer)
+                module.appendChild(resultsContainer)
+                daddy.appendChild(module)
+                document.body.appendChild(daddy)
+                // debugger
+                
+                
+                submitForm()
+            }
+
+            var submitForm = (e) => {
+                const resultsContainer = document.querySelector('.results')
+                const form = document.querySelector('.form')
+
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault()
+                    const playerInput = document.getElementById('userName').value 
+
+                    const playerResults = {
+                        name: playerInput,
+                        score: scoreManager.score
+                    }
+
+                    dbRef.push(playerResults);
+
+                    resultsContainer.innerHTML = `
+                        <h2>Great Job!</h2>
+                        <p>You shot down ${(scoreManager.score) / 2} cases of Coronavirus!</p>
+                        <form action="" class="form">
+                            <p>Thank you for saving the world. Your score has been added!</p>
+                            <button id='restart-button' onclick="restartFunction(e)">Play Again?</button>
+                        </form>
+                    `;
+                })
+
+            }
+
+
             var draw = function(){
                 update();
 
@@ -309,24 +418,8 @@ var ShooterGame = function(bool){
                 if(!gameOver){
                     setTimeout(draw, 1000/25)
                 } else {
-                    var myButton = document.createElement('BUTTON')
-                    var text = document.createTextNode('Restart Game')
-                    var TingDone = document.createElement('H1')
-                    var gameText = document.createTextNode('Game Over! Your score is:' + scoreManager.score)
-                    TingDone.appendChild(gameText)
-                    TingDone.setAttribute('id','gameova')
-                    myButton.appendChild(text)
-                    myButton.setAttribute('id','restartgame')
-                    myButton.onclick = function(){
-                        // document.getElementById('restartgame').style.display = 'none'
-                        document.getElementById('restartgame').remove()
-                        document.getElementById('gameova').remove()
-                        ShooterGame(true)
-                    }
-                    document.body.removeChild(canvas); 
-                    document.body.appendChild(TingDone)
-                    TingDone.appendChild(myButton).style.height = '50%'
-   
+                    debugger
+                    resultsFunction()
                 }
             }
 
@@ -344,17 +437,25 @@ var ShooterGame = function(bool){
                 KEY_STATUS[KEY_CODES[code]] = false;
             }
 
-            window.addEventListener('keydown',function(e){
+            document.addEventListener('keydown',function(e){
                 var keyCode = (e.keyCode) ? e.keyCode : e.charCode
+                alph = "abcdefghijklmnopqrstuvwxyz"
                 if (KEY_CODES[keyCode] === 'space'){
                     bullets.push(new Bullet(player.gameObject, new GameObject(0, -20, 0, 0)))
                 }
-                else{
+                else if ((KEY_CODES[keyCode] === 'left') || (KEY_CODES[keyCode] === 'right') || (KEY_CODES[keyCode] === 'up') || (KEY_CODES[keyCode] === 'down')){
                     e.preventDefault();
-                    player.update(KEY_STATUS[KEY_CODES[keyCode]] = true);
+                    player.update(KEY_STATUS[KEY_CODES[keyCode]] = true); // moves the player left right up and down
+                } else if(e.KeyCode === 8){
+                    e.preventDefault();
+                    var userName = document.getElementById("userName").value
+                    userName = userName.slice(0,userName.length - 1)
+                } else if(alph.include(e.key)){
+                    e.preventDefault();
+                    document.getElementById("userName").value += e.key
                 }
             });
-            window.addEventListener('keyup', function (e) {
+            document.addEventListener('keyup', function (e) {
                 var keyCode = (e.keyCode) ? e.keyCode : e.charCode
                 if (KEY_CODES[keyCode] === 'space') {
                     bullets.push(new Bullet(player.gameObject, new GameObject(0, -20, 0, 0)))
@@ -365,14 +466,56 @@ var ShooterGame = function(bool){
                 }
             });
 
-            // canvas.addEventListener('mousedown', function(e){
-            //     bullets.push(new Bullet(player.gameObject, new GameObject(0,-20,0,0)));
-            // });
     }
-    
+    var getHighScores = () => {
+        var scoresSent = []
+        dbRef.on('value', (response) => {
+            const data = response.val()
+            let dbScores = []
+
+            debugger
+            for (let key in data) {
+                dbScores.push({
+                    name: data[key].name,
+                    score: data[key].score
+                })
+            }
+
+            dbScores.sort(function (a, b) {
+                if (a.score > b.score) {
+                    return -1;
+                } else if (b.score > a.score) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            debugger
+            dbScores = dbScores.splice(0, 10)
+            if(scoresSent.length < 1){
+                scoresSent.push(dbScores)
+            }
+            let ele = document.getElementsByClassName("highscores")
+            let scoresContainer = ele[0]
+                let currentScores = []
+                scoresSent.map(players => {
+                    return players.map(player => {
+                        const playerDetails = `<li>${player.name} - ${player.score} eradications </li>`
+                        currentScores.push(playerDetails)
+                    })
+                })
+                scoresContainer.innerHTML = `
+                    <h2>High Scores</h2>
+                    <div class="leader-boards">
+                        <ol>` + currentScores.join(" ") + `</ol>
+                    </div>`
+            
+        })
+        debugger
+        return scoresSent
+    }
 
     World();
-    // debugger
     if(bool === true){
         document.body.appendChild(canvas); 
         document.getElementById('newting').style.display = 'none'
@@ -380,4 +523,5 @@ var ShooterGame = function(bool){
     }
 }
 
+// importCodeURL("https://www.gstatic.com/firebasejs/3.4.0/firebase.js", ShooterGame())
 ShooterGame();

@@ -104,3 +104,163 @@ button{
     border-radius: 5px;
     cursor: pointer;
 }
+
+#restart{
+    display: none;
+}
+.module,
+.highscores-module{
+  background-color:rgb(58, 118, 67);
+  margin:0 auto;
+  width:80%;
+  height: 90vh;
+  position: absolute;
+  padding:10px;
+  font-size: 25px;
+  text-align: center;
+  border-radius: 25px;
+  border: 3px solid #fefefe;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+}
+
+
+.results {
+  width:50%;
+  height:100%;
+  
+}
+
+.highscores {
+  width:50%;
+  height:100%;
+  border-right: 3px solid #fefefe;  
+}
+
+.highscores-module{
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+
+.leader-boards {
+  width:80%;
+  height:100%;
+  overflow: auto;
+}
+
+.highscores li {
+  font-size: 18px;
+  line-height: 1.1;
+  padding:0;
+  margin:0;
+}
+
+.highscores ol {
+  margin: 0 auto;
+  width:75%;
+  display: block;
+}
+
+.highscores-module span {
+  display:block;
+  cursor:pointer;
+  color:#fefefe;
+  font-size: 75px;
+  padding:15px;
+  line-height: 0;
+  width: 100%;
+  text-align: right;
+  margin-top:25px;
+}
+
+.highscores-module span:hover {
+  color:rgb(45, 14, 75);
+}
+
+.results p {
+  font-size: 20px;
+}
+
+form {
+  width:100%;
+}
+
+button {
+  font-family: 'Alegreya Sans', sans-serif;
+  text-transform: uppercase;
+  background-color:rgb(58, 118, 67);
+  color:#fefefe;
+  border: 3px solid #fefefe;
+  border-radius: 25px;
+  padding: 10px 15px;
+  margin-top: 10%;
+}
+
+input[type="text"]::placeholder,
+legend,
+label,
+input[type="submit"]{
+  color:#fefefe;
+  font-family: 'Monda', sans-serif;
+}
+
+legend {
+  width:100%;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="submit"] {
+  background-color:rgb(58, 118, 67);
+  color:#fefefe;
+  border: 2px solid #fefefe;
+  /* border-radius: 25px; */
+  margin:0;
+}
+
+input[type="text"] {
+  width:60%;
+  padding:10px 15px;
+}
+
+input[type="submit"] {
+  width:30%;
+  padding:4px 0;
+  transition: background 0.5s ease;
+}
+
+input[type="submit"]:hover,
+input[type="text"]:focus,
+input[type="text"]:active,
+button:hover {
+  background-color:rgb(45, 14, 75);
+}
+
+/* Scores */
+.scores {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.scores span {
+  display: block;
+  cursor: pointer;
+  margin-top: 10px;
+  color:#fefefe;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size:30px;
+  font-weight: 400;
+  letter-spacing: 2px;
+
+}
+
+.leader-boards {
+  width:80%;
+  height:100%;
+  overflow: auto;
+}
