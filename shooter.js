@@ -10,8 +10,11 @@ var ShooterGame = function(bool){
         measurementId: "G-M379LDKFCQ"
     };
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    debugger
+    if(firebase.apps.length < 1){
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    }
     var db = firebase.database()
     var dbRef = db.ref()
     var canvas = document.createElement('canvas');
@@ -338,6 +341,7 @@ var ShooterGame = function(bool){
                 // let highScores = getHighScores()
                 getHighScores()
                 const daddy = document.createElement('section')
+                daddy.id = "daddySection"
                 const module  = document.createElement('div')
                 module.className = 'module'
                 const scoresContainer = document.createElement('div')
@@ -345,7 +349,11 @@ var ShooterGame = function(bool){
 
                 const resultsContainer = document.createElement('div')
                 resultsContainer.className = 'results'
-                
+                // function restartFunction(){
+                //     debugger
+                //     document.getElementById("daddySection").style.display= 'none'
+                //     ShooterGame(true)
+                // }
 
                 resultsContainer.innerHTML = `
                     <h2>Game Over: You have done this planet a great service</h2>
@@ -358,8 +366,8 @@ var ShooterGame = function(bool){
                         <input type="text" name="userName" placeholder="Name" id ="userName" maxlength=10 required>
                         <input type="submit" id="restart-button" value="Submit">
                         </form>
+                        <button id="restart-button" onclick="(ShooterGame(true))">Play Again?</button>
                         `;
-                        // <button id="restart-button" onclick="(  )">Play Again?</button>
                 document.body.removeChild(canvas)
                 module.appendChild(scoresContainer)
                 module.appendChild(resultsContainer)
@@ -391,7 +399,7 @@ var ShooterGame = function(bool){
                         <p>You shot down ${(scoreManager.score) / 2} cases of Coronavirus!</p>
                         <form action="" class="form">
                             <p>Thank you for saving the world. Your score has been added!</p>
-                            <button id='restart-button' onclick="restartFunction(e)">Play Again?</button>
+                            <button id='restart-button' onclick="ShooterGame(true)">Play Again?</button>
                         </form>
                     `;
                 })
@@ -517,11 +525,16 @@ var ShooterGame = function(bool){
 
     World();
     if(bool === true){
+        debugger
+        if (document.querySelectorAll('section').length > 0){
+            for(let j = 0; j < document.querySelectorAll('section').length;j++){
+                document.querySelectorAll('section')[j].style.visibility = 'hidden'
+            }
+        }
         document.body.appendChild(canvas); 
         document.getElementById('newting').style.display = 'none'
         document.getElementById('restartgame').style.display = 'none'
     }
 }
 
-// importCodeURL("https://www.gstatic.com/firebasejs/3.4.0/firebase.js", ShooterGame())
 ShooterGame();
